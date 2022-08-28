@@ -229,7 +229,7 @@ minetest.register_node("chunkkeeper:keeper_off", {
         chunkkeeper.img("sides_bottom")
     },
     is_ground_content = false,
-    groups = {handy = 3, oddly_breakable_by_hand = 3},
+    groups = {handy = 1, oddly_breakable_by_hand = 3},
     drop = "chunkkeeper:keeper_off",
     on_construct = function (pos, node)
         local meta = minetest.get_meta(pos)
@@ -351,7 +351,7 @@ minetest.register_node("chunkkeeper:keeper_on", {
         chunkkeeper.img("sides_bottom")
     },
     is_ground_content = false,
-    groups = {handy = 3, oddly_breakable_by_hand = 3},
+    groups = {handy = 1, oddly_breakable_by_hand = 3},
     drop = "chunkkeeper:keeper_off",
     on_construct = function (pos, node)
         local meta = minetest.get_meta(pos)
@@ -465,7 +465,7 @@ minetest.register_node("chunkkeeper:keeper_inf_off", {
         chunkkeeper.img("sides_bottom")
     },
     is_ground_content = false,
-    groups = {handy = 3, oddly_breakable_by_hand = 3},
+    groups = {handy = 1, oddly_breakable_by_hand = 3},
     drop = "chunkkeeper:keeper_inf_off",
     on_construct = function (pos, node)
         local meta = minetest.get_meta(pos)
@@ -554,7 +554,7 @@ minetest.register_node("chunkkeeper:keeper_inf_on", {
         chunkkeeper.img("sides_bottom")
     },
     is_ground_content = false,
-    groups = {handy = 3, oddly_breakable_by_hand = 3},
+    groups = {handy = 1, oddly_breakable_by_hand = 3},
     drop = "chunkkeeper:keeper_inf_off",
     on_construct = function (pos, node)
         local meta = minetest.get_meta(pos)
@@ -622,3 +622,4 @@ minetest.register_node("chunkkeeper:keeper_inf_on", {
         return chunkkeeper.processFuel(pos) -- Needs to run for persistance
     end
 })
+
