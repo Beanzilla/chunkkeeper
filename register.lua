@@ -253,8 +253,10 @@ minetest.register_node("chunkkeeper:keeper_off", {
         local meta = minetest.get_meta(pos)
         chunkkeeper.log({pos=pos, listname=listname, index=index, stack=stack:to_table(), player=player:get_player_name()})
         local inv = meta:get_inventory()
-        if player:get_player_name() ~= meta:get_string("owner") or not minetest.check_player_privs(player, {protection_bypass=true}) or meta:get_string("owner") == "" then
-            return -1 -- No inventory allowed, bad player, bad.
+        if player:get_player_name() ~= meta:get_string("owner") or meta:get_string("owner") == "" then
+            if not minetest.check_player_privs(player, {protection_bypass=true}) then
+                return -1 -- No inventory allowed, bad player, bad.
+            end
         end
         if listname ~= "main" then
             chunkkeeper.log({listname=listname, errmsg = "Invalid inventory, expected 'main'"})
@@ -288,8 +290,10 @@ minetest.register_node("chunkkeeper:keeper_off", {
         local hide_owner = meta:get_int("hide_owner") == 1
         local super = meta:get_int("super_user") == 1
         local owner = meta:get_string("owner")
-        if owner ~= "" and player:get_player_name() ~= owner and not minetest.check_player_privs(player, {protection_bypass=true}) then
-            return -- Invalid user, non-owner access
+        if owner ~= "" and player:get_player_name() ~= owner then
+            if not minetest.check_player_privs(player, {protection_bypass=true}) then
+                return -- Invalid user, non-owner access
+            end
         end
         local dirty = false
         if fields.toggle_running then
@@ -371,8 +375,10 @@ minetest.register_node("chunkkeeper:keeper_on", {
         local meta = minetest.get_meta(pos)
         --chunkkeeper.log({pos=pos, listname=listname, index=index, stack=stack:to_table(), player=player:get_player_name()})
         local inv = meta:get_inventory()
-        if player:get_player_name() ~= meta:get_string("owner") or not minetest.check_player_privs(player, {protection_bypass=true}) or meta:get_string("owner") == "" then
-            return -1 -- No inventory allowed, bad player, bad.
+        if player:get_player_name() ~= meta:get_string("owner") or meta:get_string("owner") == "" then
+            if not minetest.check_player_privs(player, {protection_bypass=true}) then
+                return -1 -- No inventory allowed, bad player, bad.
+            end
         end
         if listname ~= "main" then
             chunkkeeper.log({listname=listname, errmsg = "Invalid inventory, expected 'main'"})
@@ -406,8 +412,10 @@ minetest.register_node("chunkkeeper:keeper_on", {
         local hide_owner = meta:get_int("hide_owner") == 1
         local super = meta:get_int("super_user") == 1
         local owner = meta:get_string("owner")
-        if owner ~= "" and player:get_player_name() ~= owner or not minetest.check_player_privs(player, {protection_bypass=true}) then
-            return -- Invalid user, non-owner access
+        if owner ~= "" and player:get_player_name() ~= owner then
+            if not minetest.check_player_privs(player, {protection_bypass=true}) then
+                return -- Invalid user, non-owner access
+            end
         end
         local dirty = false
         if fields.toggle_running then
@@ -486,8 +494,10 @@ minetest.register_node("chunkkeeper:keeper_inf_off", {
         local hide_owner = meta:get_int("hide_owner") == 1
         local super = meta:get_int("super_user") == 1
         local owner = meta:get_string("owner")
-        if owner ~= "" and player:get_player_name() ~= owner or not minetest.check_player_privs(player, {protection_bypass=true}) then
-            return -- Invalid user, non-owner access
+        if owner ~= "" and player:get_player_name() ~= owner then
+            if not minetest.check_player_privs(player, {protection_bypass=true}) then
+                return -- Invalid user, non-owner access
+            end
         end
         local dirty = false
         if fields.toggle_running then
@@ -573,8 +583,10 @@ minetest.register_node("chunkkeeper:keeper_inf_on", {
         local hide_owner = meta:get_int("hide_owner") == 1
         local super = meta:get_int("super_user") == 1
         local owner = meta:get_string("owner")
-        if owner ~= "" and player:get_player_name() ~= owner or not minetest.check_player_privs(player, {protection_bypass=true}) then
-            return -- Invalid user, non-owner access
+        if owner ~= "" and player:get_player_name() ~= owner then
+            if not minetest.check_player_privs(player, {protection_bypass=true}) then
+                return -- Invalid user, non-owner access
+            end
         end
         local dirty = false
         if fields.toggle_running then
