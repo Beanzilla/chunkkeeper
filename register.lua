@@ -174,7 +174,6 @@ function chunkkeeper.update_formspec_inf(pos)
         meta:set_string("formspec",
             "size[8,6]" ..
             "label[0.3,0.3;Inf]" ..
-            "list[context;main;2,0;1,1;]" ..
             "button[0,1; 1.5,1;toggle_running;"..minetest.formspec_escape(running_button).."]" ..
             "button[3,1; 2.5,1;toggle_hide_owner;" .. minetest.formspec_escape(hide_owner_button) .."]" ..
             "list[current_player;main;0,2;8,4;]" ..
@@ -185,8 +184,6 @@ function chunkkeeper.update_formspec_inf(pos)
         meta:set_string("formspec",
             "size[9, 6.5]"..
             "label[0.3,0.3;Inf]"..
-            "list[context;main;2,0;1,1;]"..
-            mclform.get_itemslot_bg(2, 0, 1, 1)..
             "button[0,1; 1.5,1;toggle_running;"..minetest.formspec_escape(running_button).."]" ..
             "button[3,1; 2.5,1;toggle_hide_owner;" .. minetest.formspec_escape(hide_owner_button) .."]" ..
             "label[0,1.85;Inventory]"..
