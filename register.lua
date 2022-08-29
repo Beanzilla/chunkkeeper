@@ -251,29 +251,29 @@ minetest.register_node("chunkkeeper:keeper_off", {
     end,
     allow_metadata_inventory_put = function (pos, listname, index, stack, player) -- Add fuel!
         local meta = minetest.get_meta(pos)
+        local count = stack:get_count()
         chunkkeeper.log({pos=pos, listname=listname, index=index, stack=stack:to_table(), player=player:get_player_name()})
         local inv = meta:get_inventory()
         if player:get_player_name() ~= meta:get_string("owner") or meta:get_string("owner") == "" then
             if not minetest.check_player_privs(player, {protection_bypass=true}) then
-                return -1 -- No inventory allowed, bad player, bad.
+                return count -- No inventory allowed, bad player, bad.
             end
         end
         if listname ~= "main" then
             chunkkeeper.log({listname=listname, errmsg = "Invalid inventory, expected 'main'"})
-            return -1 -- Invalid inventory name
+            return count -- Invalid inventory name
         end
-        local count = stack:get_count()
         local recipe = minetest.get_craft_result({
             method = "fuel",
             items = {stack}
         })
         if not recipe then
             chunkkeeper.log({stack=stack:to_table(), errmsg = "Failed getting recipes for stack"})
-            return -1
+            return count
         end
         if recipe.time == 0 then
             chunkkeeper.log({stack=stack:to_table(), errmsg = "Didn't get a burnable item?"})
-            return -1
+            return count
         end
         local timer = meta:get_int("time_left")
         timer = timer + ((recipe.time * count) * chunkkeeper.settings.fuel_multiplier)
@@ -373,29 +373,29 @@ minetest.register_node("chunkkeeper:keeper_on", {
     end,
     allow_metadata_inventory_put = function (pos, listname, index, stack, player) -- Add fuel!
         local meta = minetest.get_meta(pos)
+        local count = stack:get_count()
         --chunkkeeper.log({pos=pos, listname=listname, index=index, stack=stack:to_table(), player=player:get_player_name()})
         local inv = meta:get_inventory()
         if player:get_player_name() ~= meta:get_string("owner") or meta:get_string("owner") == "" then
             if not minetest.check_player_privs(player, {protection_bypass=true}) then
-                return -1 -- No inventory allowed, bad player, bad.
+                return count -- No inventory allowed, bad player, bad.
             end
         end
         if listname ~= "main" then
             chunkkeeper.log({listname=listname, errmsg = "Invalid inventory, expected 'main'"})
-            return -1 -- Invalid inventory name
+            return count -- Invalid inventory name
         end
-        local count = stack:get_count()
         local recipe = minetest.get_craft_result({
             method = "fuel",
             items = {stack}
         })
         if not recipe then
             chunkkeeper.log({stack=stack:to_table(), errmsg = "Failed getting recipes for stack"})
-            return -1
+            return count
         end
         if recipe.time == 0 then
             chunkkeeper.log({stack=stack:to_table(), errmsg = "Didn't get a burnable item?"})
-            return -1
+            return count
         end
         local timer = meta:get_int("time_left")
         timer = timer + ((recipe.time * count) * chunkkeeper.settings.fuel_multiplier)
@@ -403,7 +403,7 @@ minetest.register_node("chunkkeeper:keeper_on", {
         chunkkeeper.update_formspec(pos)
         stack:clear()
         inv:set_list("main", {})
-        return count -- Eat all fuel, this will make things vanish but the time will increase (intended stuff)
+        return -1 -- Eat all fuel, this will make things vanish but the time will increase (intended stuff)
     end,
     on_receive_fields = function (pos, formname, fields, player)
         local meta = minetest.get_meta(pos)
@@ -469,7 +469,7 @@ minetest.register_node("chunkkeeper:keeper_inf_off", {
     drop = "chunkkeeper:keeper_inf_off",
     on_construct = function (pos, node)
         local meta = minetest.get_meta(pos)
-        meta:set_int("super_user", 0) -- not inf
+        meta:set_int("super_user", 1) -- inf
         meta:set_int("time_left", 0) -- no time
         meta:set_int("running", 0) -- off
         meta:set_int("hide_owner", 0) -- off
@@ -486,7 +486,8 @@ minetest.register_node("chunkkeeper:keeper_inf_off", {
         end
     end,
     allow_metadata_inventory_put = function (pos, listname, index, stack, player) -- Add fuel!
-        return -1 -- Invalid for infinite time
+        local count = stack:get_count()
+        return count -- Invalid for infinite time
     end,
     on_recieve_fields = function (pos, formname, fields, player)
         local meta = minetest.get_meta(pos)
@@ -575,7 +576,8 @@ minetest.register_node("chunkkeeper:keeper_inf_on", {
         end
     end,
     allow_metadata_inventory_put = function (pos, listname, index, stack, player) -- Add fuel!
-        return -1 -- Invalid there is no need to add time for a infinite time
+        local count = stack:get_count()
+        return count -- Invalid there is no need to add time for a infinite time
     end,
     on_recieve_fields = function (pos, formname, fields, player)
         local meta = minetest.get_meta(pos)
