@@ -1,7 +1,7 @@
 
 chunkkeeper = {}
 chunkkeeper.modpath = minetest.get_modpath("chunkkeeper")
-chunkkeeper.version = "1.0"
+chunkkeeper.version = "1.1"
 
 chunkkeeper.settings = {
     fuel_multiplier = 2.0
