@@ -486,12 +486,13 @@ minetest.register_node("chunkkeeper:keeper_inf_off", {
         local count = stack:get_count()
         return count -- Invalid for infinite time
     end,
-    on_recieve_fields = function (pos, formname, fields, player)
+    on_receive_fields = function (pos, formname, fields, player)
         local meta = minetest.get_meta(pos)
         local run = meta:get_int("running") == 1
         local hide_owner = meta:get_int("hide_owner") == 1
         local super = meta:get_int("super_user") == 1
         local owner = meta:get_string("owner")
+        --chunkkeeper.log({pos=pos, formname=formname, fields=fields, player=player:get_player_name(), owner=owner, super=super, run=run, hide_owner=hide_owner})
         if owner ~= "" and player:get_player_name() ~= owner then
             if not minetest.check_player_privs(player, {protection_bypass=true}) then
                 return -- Invalid user, non-owner access
@@ -576,12 +577,13 @@ minetest.register_node("chunkkeeper:keeper_inf_on", {
         local count = stack:get_count()
         return count -- Invalid there is no need to add time for a infinite time
     end,
-    on_recieve_fields = function (pos, formname, fields, player)
+    on_receive_fields = function (pos, formname, fields, player)
         local meta = minetest.get_meta(pos)
         local run = meta:get_int("running") == 1
         local hide_owner = meta:get_int("hide_owner") == 1
         local super = meta:get_int("super_user") == 1
         local owner = meta:get_string("owner")
+        --chunkkeeper.log({pos=pos, formname=formname, fields=fields, player=player:get_player_name(), owner=owner, super=super, run=run, hide_owner=hide_owner})
         if owner ~= "" and player:get_player_name() ~= owner then
             if not minetest.check_player_privs(player, {protection_bypass=true}) then
                 return -- Invalid user, non-owner access
