@@ -24,19 +24,13 @@ function chunkkeeper.processFuel(pos)
                 --chunkkeeper.log({timer=timer, super=super, running=run})
                 dirty = true
                 minetest.swap_node(pos, {name = "chunkkeeper:keeper_off"})
+                minetest.forceload_free_block(pos)
             end
         end
         meta:set_int("time_left", timer)
         dirty = true
     elseif super then -- Just update with super
         dirty = true
-    end
-    if run then -- Change persistance based on running or not (this could also mean the keeper's running was manually toggled)
-        minetest.forceload_block(pos)
-        --chunkkeeper.log({msg="Persisting position", pos=pos})
-    else
-        minetest.forceload_free_block(pos)
-        --chunkkeeper.log({msg="Stopped persisting position", pos=pos})
     end
 
     if dirty then
@@ -301,6 +295,7 @@ minetest.register_node("chunkkeeper:keeper_off", {
                 else
                     minetest.swap_node(pos, {name = "chunkkeeper:keeper_inf_off"})
                 end
+                minetest.forceload_free_block(pos)
             else
                 meta:set_int("running", 1)
                 if not super then
@@ -308,6 +303,7 @@ minetest.register_node("chunkkeeper:keeper_off", {
                 else
                     minetest.swap_node(pos, {name = "chunkkeeper:keeper_inf_on"})
                 end
+                minetest.forceload_block(pos)
             end
             dirty = true
         elseif fields.toggle_hide_owner then
@@ -423,6 +419,7 @@ minetest.register_node("chunkkeeper:keeper_on", {
                 else
                     minetest.swap_node(pos, {name = "chunkkeeper:keeper_inf_off"})
                 end
+                minetest.forceload_free_block(pos)
             else
                 meta:set_int("running", 1)
                 if not super then
@@ -430,6 +427,7 @@ minetest.register_node("chunkkeeper:keeper_on", {
                 else
                     minetest.swap_node(pos, {name = "chunkkeeper:keeper_inf_on"})
                 end
+                minetest.forceload_block(pos)
             end
             dirty = true
         elseif fields.toggle_hide_owner then
@@ -507,6 +505,7 @@ minetest.register_node("chunkkeeper:keeper_inf_off", {
                 else
                     minetest.swap_node(pos, {name = "chunkkeeper:keeper_inf_off"})
                 end
+                minetest.forceload_free_block(pos)
             else
                 meta:set_int("running", 1)
                 if not super then
@@ -514,6 +513,7 @@ minetest.register_node("chunkkeeper:keeper_inf_off", {
                 else
                     minetest.swap_node(pos, {name = "chunkkeeper:keeper_inf_on"})
                 end
+                minetest.forceload_block(pos)
             end
             dirty = true
         elseif fields.toggle_hide_owner then
@@ -598,6 +598,7 @@ minetest.register_node("chunkkeeper:keeper_inf_on", {
                 else
                     minetest.swap_node(pos, {name = "chunkkeeper:keeper_inf_off"})
                 end
+                minetest.forceload_free_block(pos)
             else
                 meta:set_int("running", 1)
                 if not super then
@@ -605,6 +606,7 @@ minetest.register_node("chunkkeeper:keeper_inf_on", {
                 else
                     minetest.swap_node(pos, {name = "chunkkeeper:keeper_inf_on"})
                 end
+                minetest.forceload_block(pos)
             end
             dirty = true
         elseif fields.toggle_hide_owner then
